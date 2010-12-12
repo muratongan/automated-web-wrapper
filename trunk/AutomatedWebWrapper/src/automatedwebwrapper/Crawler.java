@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author murat
+ * @author hossein
  */
 public class Crawler {
     private String URL;
