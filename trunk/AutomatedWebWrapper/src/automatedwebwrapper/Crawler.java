@@ -31,7 +31,9 @@ public class Crawler {
     }
 
     public List<String> getAllURLs() {
-        return null;
+        List<String> urls = new ArrayList<String>();
+        urls.add("test");
+        return urls;
     }
 
     public List<List<String>> getURLClusters() {
