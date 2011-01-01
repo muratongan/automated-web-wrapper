@@ -75,7 +75,7 @@ public class ThreadManager {
         this.maximumNoThreads = maximumNoThreads;
         this.crawlQueue = crawlQueue;
         this.threadMsgReceiver = threadMsgReceiver;
-       	this.threadClass = threadClass;
+       	this.threadClass = CrawlerThread.class;
         this.baseURL = baseURL;
 
         this.idCounter = 0;
