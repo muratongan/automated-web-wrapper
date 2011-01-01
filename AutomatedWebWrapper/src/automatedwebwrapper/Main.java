@@ -5,6 +5,9 @@
 
 package automatedwebwrapper;
 
+import java.util.Set;
+
+
 /**
  *
  * @author murat
@@ -16,7 +19,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("test");
+        automatedwebwrapper.WebCrawler.Main exMain = new automatedwebwrapper.WebCrawler.Main();
+        Set processedURLs = exMain.startCrawl();
+        
     }
 
 }
