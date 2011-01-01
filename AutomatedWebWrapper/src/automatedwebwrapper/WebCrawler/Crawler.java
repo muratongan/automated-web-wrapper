@@ -18,7 +18,7 @@ public class Crawler implements InterfaceThreadMsgReceiver {
     public Crawler(URL crawlURL, InterfaceCrawlQueue crawlQueue, int maxLevel, int maxThreads)
             throws InstantiationException, IllegalAccessException{
 
-        ThreadManager threadManager = new ThreadManager(crawlURL, 0, maxLevel, maxThreads, crawlQueue, this, CrawlerThread.class );
+        ThreadManager threadManager = new ThreadManager(crawlURL, 0, maxLevel, maxThreads, crawlQueue, this, CrawlThread.class );
 
         }
     
