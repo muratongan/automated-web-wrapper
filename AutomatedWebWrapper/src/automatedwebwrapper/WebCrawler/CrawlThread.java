@@ -5,10 +5,17 @@
 
 package automatedwebwrapper.WebCrawler;
 
+import automatedwebwrapper.WebCrawler.AbstractClasses.BaseCrawlThread;
+
 /**
  * M. H. Nassabi
  * @author s098828
  */
-public class CrawlThread {
+public class CrawlThread extends BaseCrawlThread {
+
+    @Override
+    public void process(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
 }
