@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         automatedwebwrapper.WebCrawler.Main exMain = new automatedwebwrapper.WebCrawler.Main();
-        Set processedURLs = exMain.startCrawl();
+        Set processedURLs = exMain.startCrawl(); //This is the set of all Processed URLS crawled by the crawler
         
     }
 
