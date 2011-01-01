@@ -8,7 +8,7 @@ package automatedwebwrapper.WebCrawler;
 import java.net.URL;
 import automatedwebwrapper.WebCrawler.Interfaces.InterfaceCrawlQueue;
 import automatedwebwrapper.WebCrawler.Interfaces.InterfaceThreadMsgReceiver;
-import automatedwebwrapper.WebCrawler.CrawlerThread;
+
 /**
  * M. H. Nassabi
  * @author s098828
