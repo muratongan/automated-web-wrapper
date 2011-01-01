@@ -35,8 +35,8 @@ public class Main {
 		try {
 			mainThread = new Thread("MainThread");
                         mainThread.start();
-                        URL crawlURL = new URL("http://blog.nassabi.net");
-                        int maxCrawlLevel = 2;
+                        URL crawlURL = new URL("http://bbc.co.uk");
+                        int maxCrawlLevel = 1;
 			int maxNumberThreads = 5;
 			int maxNumberOfURLs = -1;
 
