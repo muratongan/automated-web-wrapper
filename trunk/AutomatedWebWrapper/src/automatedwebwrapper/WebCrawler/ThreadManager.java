@@ -53,6 +53,9 @@ public class ThreadManager {
 		return numberOfThreads;
 	}
 
+        public InterfaceCrawlQueue getCrawlQueue(){
+            return this.crawlQueue;
+        }
 
         //Setters
 

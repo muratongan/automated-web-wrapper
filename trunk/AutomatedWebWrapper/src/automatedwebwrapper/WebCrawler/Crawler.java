@@ -15,10 +15,17 @@ import automatedwebwrapper.WebCrawler.Interfaces.InterfaceThreadMsgReceiver;
  */
 public class Crawler implements InterfaceThreadMsgReceiver {
 
+    private ThreadManager threadManager;
+    private InterfaceCrawlQueue queue;
+
+    public InterfaceCrawlQueue getQueue(){
+        return queue;
+    }
+
     public Crawler(URL crawlURL, InterfaceCrawlQueue crawlQueue, int maxLevel, int maxThreads)
             throws InstantiationException, IllegalAccessException{
 
-        ThreadManager threadManager = new ThreadManager(crawlURL, 0, maxLevel, maxThreads, crawlQueue, this, CrawlThread.class );
+         threadManager = new ThreadManager(crawlURL, 0, maxLevel, maxThreads, crawlQueue, this, CrawlThread.class );
 
         }
     
@@ -33,6 +40,7 @@ public class Crawler implements InterfaceThreadMsgReceiver {
 
     public void allThreadsFinishedProcessing() {
         System.out.println("\n*********THE CRAWLER HAS FINISHED CRAWLING*********");
+        queue = threadManager.getCrawlQueue();
     }
 
 
