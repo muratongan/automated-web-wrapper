@@ -6,6 +6,7 @@
 package automatedwebwrapper.WebCrawler;
 
 import java.net.URL;
+import java.util.Set;
 
 
 /**
@@ -17,9 +18,24 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    	public static void main(String[] args) {
+        private Set processedURLs;
+        private Thread mainThread;
+
+        public Set getProcessedURLs()
+        {
+            return this.processedURLs;
+        }
+
+        public void setProcessedURLs(Set URLs)
+        {
+            this.processedURLs = URLs;
+        }
+
+    	public Set startCrawl() {
 		try {
-			URL crawlURL = new URL("http://bbc.co.uk/persian");
+			mainThread = new Thread("MainThread");
+                        mainThread.start();
+                        URL crawlURL = new URL("http://blog.nassabi.net");
                         int maxCrawlLevel = 2;
 			int maxNumberThreads = 5;
 			int maxNumberOfURLs = -1;
@@ -29,12 +45,24 @@ public class Main {
 			crawlQueue.setMaximumAllURLs(maxNumberOfURLs);
 			crawlQueue.push(crawlURL, 0);
 			
-                        new Crawler(crawlURL, crawlQueue, maxCrawlLevel, maxNumberThreads);
-				return;
+                        Crawler crawler = new Crawler(crawlURL, crawlQueue, maxCrawlLevel, maxNumberThreads);
+
+                        while ( crawler.getQueue() == null)
+                        {
+                            if (Thread.currentThread() == mainThread){
+                                Thread.sleep(10);
+                                //mainThread.sleep(10);
+                            }
+
+                        }
+                        mainThread.stop();
+                        setProcessedURLs(crawler.getQueue().getProcessedURLs());
+                        return this.getProcessedURLs();
 		} catch (Exception e) {
 			System.err.println("An error occured: ");
 			e.printStackTrace();
 			// System.err.println(e.toString());
+                        return null;
 		}
 		
 	}
