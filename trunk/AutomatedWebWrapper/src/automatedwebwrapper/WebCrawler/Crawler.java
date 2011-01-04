@@ -5,9 +5,13 @@
 
 package automatedwebwrapper.WebCrawler;
 
+import java.io.IOException;
 import java.net.URL;
 import automatedwebwrapper.WebCrawler.Interfaces.InterfaceCrawlQueue;
 import automatedwebwrapper.WebCrawler.Interfaces.InterfaceThreadMsgReceiver;
+import automatedwebwrapper.WebCrawler.UtilityClasses.URLExtractor;
+import java.net.MalformedURLException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * M. H. Nassabi
@@ -23,9 +27,23 @@ public class Crawler implements InterfaceThreadMsgReceiver {
     }
 
     public Crawler(URL crawlURL, InterfaceCrawlQueue crawlQueue, int maxLevel, int maxThreads)
-            throws InstantiationException, IllegalAccessException{
+            throws InstantiationException, IllegalAccessException, IOException{
+            try{
+                AtomicReference<Object> hostName = new AtomicReference<Object>("NULL");
+                URLExtractor.getURL(crawlURL, hostName);
+                
+                threadManager = new ThreadManager((URL)hostName.get(), 0, maxLevel, maxThreads, crawlQueue, this, CrawlThread.class );
+            
+            }
+            catch (MalformedURLException e)
+            {
+                    System.err.println("Error occured while trying to cast string into URL!");
+            
+            }
 
-         threadManager = new ThreadManager(crawlURL, 0, maxLevel, maxThreads, crawlQueue, this, CrawlThread.class );
+
+
+
 
         }
     

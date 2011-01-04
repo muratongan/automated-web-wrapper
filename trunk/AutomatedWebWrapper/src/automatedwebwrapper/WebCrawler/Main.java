@@ -35,9 +35,9 @@ public class Main {
 		try {
 			mainThread = new Thread("MainThread");
                         mainThread.start();
-                        URL crawlURL = new URL("http://bbc.co.uk");
-                        int maxCrawlLevel = 1;
-			int maxNumberThreads = 5;
+                        URL crawlURL = new URL("http://www.bbcpersian.com");
+                        int maxCrawlLevel = 6;
+			int maxNumberThreads = 20;
 			int maxNumberOfURLs = -1;
 
                         CrawlQueue crawlQueue = new CrawlQueue();
