@@ -6,12 +6,15 @@
 package automatedwebwrapper.WebCrawler.UtilityClasses;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,12 +22,53 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * M. H. Nassabi
  * @author s098828
  */
 public class URLExtractor {
+
+
+        public static void getHttpPage(URL url, Writer writer, AtomicReference<Object> hostName)
+                {
+
+            try{
+                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+
+            urlConnection.setFollowRedirects(true);
+            urlConnection.setConnectTimeout( 10000 );
+            urlConnection.setReadTimeout( 10000 );
+            urlConnection.setInstanceFollowRedirects( true );
+            urlConnection.setRequestProperty( "User-agent", "spider" );
+            urlConnection.connect();
+
+            urlConnection.getHeaderFields();
+            URL respondedHostName = urlConnection.getURL();
+            hostName.set(respondedHostName);
+
+           BufferedReader in = new BufferedReader( new InputStreamReader( urlConnection.getInputStream()));
+           String inputLine;
+           while ((inputLine = in.readLine()) != null)
+                writer.write(inputLine);
+           in.close();
+            }
+           catch (Exception ex){
+               System.err.println("An error Occured => " + ex.toString());
+            
+           }
+
+        }
+
+
+        public static String getURL(URL url, AtomicReference<Object> hostName)
+		throws IOException {
+		StringWriter sw = new StringWriter();
+		getHttpPage(url, sw, hostName);
+            	return sw.toString();
+	}
 
 
 	/**
@@ -103,10 +147,16 @@ public class URLExtractor {
 		    if ((index = page.indexOf("href", index)) == -1) break;
 		    if ((index = page.indexOf("=", index)) == -1) break;
 		    String remaining = rawPage.substring(++index);
-		    StringTokenizer st
-				= new StringTokenizer(remaining, "\t\n\r\"'>#");
+		    StringTokenizer st = new StringTokenizer(remaining, "\t\n\r\"'>");
+				//= new StringTokenizer(remaining, "\t\n\r\"'>#");
+                            
 		    String strLink = st.nextToken();
-			if (! links.contains(strLink)) links.add(strLink);
+			if (strLink.startsWith("#")){
+                            index++;
+                            continue;
+                        }
+                            
+                        if (! links.contains(strLink)) links.add(strLink);
 		}
 		return links;
     }

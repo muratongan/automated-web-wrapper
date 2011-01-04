@@ -7,9 +7,11 @@ package automatedwebwrapper.WebCrawler;
 
 import automatedwebwrapper.WebCrawler.AbstractClasses.BaseCrawlThread;
 import automatedwebwrapper.WebCrawler.UtilityClasses.URLExtractor;
+import java.io.Console;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * M. H. Nassabi
@@ -23,12 +25,20 @@ public class CrawlThread extends BaseCrawlThread {
 
                         URL baseURL = threadManager.getBaseURL();
 
-                        String rawPage = URLExtractor.getURL(pageURL);
+                        AtomicReference<Object> hostName = new AtomicReference<Object>("NULL");
+                        String rawPage = URLExtractor.getURL(pageURL, hostName);
                         String smallPage = rawPage.toLowerCase().replaceAll("\\s", " ");
 
-			Vector links = URLExtractor.extractLinks(rawPage, smallPage);
+                        Vector links = URLExtractor.extractLinks(rawPage, smallPage);
 
-			for (int n = 0; n < links.size(); n++) {
+
+
+ 
+
+                        
+                        pageURL = (URL) hostName.get();
+
+                        for (int n = 0; n < links.size(); n++) {
 				try {
 					// urls might be relative to current page
 					URL link = new URL(pageURL, (String) links.elementAt(n));
@@ -47,6 +57,16 @@ public class CrawlThread extends BaseCrawlThread {
                                 }
 
 			}
-		} catch (Exception e) {}
+		}
+                 catch (MalformedURLException e)
+                {
+                    System.err.println("Error occured while trying to cast string into URL!");
+                }
+                catch (Exception ex)
+                {
+                    System.err.println("CRAWLTHREAD_An error Occured => " + ex.toString());
+                }
+
+                
     }
 }
