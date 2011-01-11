@@ -8,7 +8,10 @@ package automatedwebwrapper;
 import automatedwebwrapper.WebCrawler.UtilityClasses.UrlClusterer;
 import automatedwebwrapper.WebCrawler.UtilityClasses.UrlTokenizer;
 import automatedwebwrapper.tree.TreeBuilder;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -25,8 +28,35 @@ public class Main {
         // TODO code application logic here
         
         automatedwebwrapper.WebCrawler.Main exMain = new automatedwebwrapper.WebCrawler.Main();
-        Set<String> processedURLs = exMain.startCrawl("http://www.bbc.co.uk", 200); //This is the set of all Processed URLS crawled by the crawler
+        Set<String> processedURLs = exMain.startCrawl("http://blog.nassabi.net", 200); //This is the set of all Processed URLS crawled by the crawler
         System.out.println("number of urls: " + processedURLs.size());
+
+        Map<Object,Set<Object>> Clusters = new HashMap<Object, Set<Object>>();
+
+        for( Object currURL : processedURLs)
+        {
+
+            int  index = currURL.toString().split("/").length - 3;
+
+
+
+            if (Clusters.containsKey(index))
+            {
+                Set urlSet = Clusters.get(index);
+                urlSet.add(currURL);
+
+            }
+            else
+            {
+                Set<Object> newSet = new HashSet<Object>();
+                newSet.add(currURL);
+                Clusters.put(index, newSet );
+            }
+
+
+        }
+
+
         for (String item : processedURLs) {
             System.out.println(item);
             UrlTokenizer tokenizer = new UrlTokenizer(item);
