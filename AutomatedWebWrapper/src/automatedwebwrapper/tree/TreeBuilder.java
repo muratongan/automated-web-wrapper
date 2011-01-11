@@ -53,9 +53,6 @@ public class TreeBuilder {
         System.out.println("PAGE:");
         System.out.println(url);
         NodeInfo contentNode = info.findContentNode();
-        System.out.println();
-        System.out.println("MAIN CONTENT NODE:");
-        System.out.println(contentNode.getPath());
 //        System.out.println("Content:");
 //        System.out.println();
 //        System.out.println(contentNode.getTextContent());
@@ -64,6 +61,16 @@ public class TreeBuilder {
         List<NodeInfo> navNodes = info.getNavigationNodes();
         for (NodeInfo navNode : navNodes) {
             System.out.println(navNode.getPath());
+            navNode.setTextWeight(0);
+        }
+        System.out.println();
+        System.out.println("MAIN CONTENT NODE:");
+        System.out.println(contentNode.getPath());
+        System.out.println();
+        if (contentNode.isNavigationNode()) {
+            System.out.println("THIS IS A NAVIGATION PAGE");
+        } else {
+            System.out.println("THIS IS A CONTENT PAGE");
         }
     }
 }

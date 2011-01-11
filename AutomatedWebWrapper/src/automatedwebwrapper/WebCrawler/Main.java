@@ -31,14 +31,13 @@ public class Main {
             this.processedURLs = URLs;
         }
 
-    	public Set startCrawl() {
+    	public Set startCrawl(String mainURL, int maxNumberOfURLs) {
 		try {
 			mainThread = new Thread("MainThread");
                         mainThread.start();
-                        URL crawlURL = new URL("http://www.bbcpersian.com");
+                        URL crawlURL = new URL(mainURL);
                         int maxCrawlLevel = 2;
 			int maxNumberThreads = 5;
-			int maxNumberOfURLs = -1;
 
                         CrawlQueue crawlQueue = new CrawlQueue();
 			crawlQueue.setFilenamePrefix("");
@@ -49,11 +48,7 @@ public class Main {
 
                         while ( crawler.getQueue() == null)
                         {
-                            if (Thread.currentThread() == mainThread){
-                                Thread.sleep(10);
-                                //mainThread.sleep(10);
-                            }
-
+                            Thread.sleep(100);
                         }
                         mainThread.stop();
                         setProcessedURLs(crawler.getQueue().getProcessedURLs());
