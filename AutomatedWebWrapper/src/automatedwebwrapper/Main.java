@@ -28,50 +28,73 @@ public class Main {
         // TODO code application logic here
         
         automatedwebwrapper.WebCrawler.Main exMain = new automatedwebwrapper.WebCrawler.Main();
-        Set<String> processedURLs = exMain.startCrawl("http://blog.nassabi.net", 200); //This is the set of all Processed URLS crawled by the crawler
+        Set<String> processedURLs = exMain.startCrawl("http://bbc.co.uk", 10); //This is the set of all Processed URLS crawled by the crawler
         System.out.println("number of urls: " + processedURLs.size());
 
-        Map<Object,Set<Object>> Clusters = new HashMap<Object, Set<Object>>();
+        Map<Object,Set<String>> sameDepthClusters = new HashMap<Object, Set<String>>();
 
-        for( Object currURL : processedURLs)
+        for( String currURL : processedURLs)
         {
 
             int  index = currURL.toString().split("/").length - 3;
 
 
 
-            if (Clusters.containsKey(index))
+            if (sameDepthClusters.containsKey(index))
             {
-                Set urlSet = Clusters.get(index);
+                Set urlSet = sameDepthClusters.get(index);
                 urlSet.add(currURL);
 
             }
             else
             {
-                Set<Object> newSet = new HashSet<Object>();
+                Set<String> newSet = new HashSet<String>();
                 newSet.add(currURL);
-                Clusters.put(index, newSet );
-            }
-
-
-        }
-
-
-        for (String item : processedURLs) {
-            System.out.println(item);
-            UrlTokenizer tokenizer = new UrlTokenizer(item);
-            tokenizer.printInfo();
-        }
-
-        UrlClusterer clusterer = new UrlClusterer(processedURLs);
-        List<List<String>> clusters = clusterer.getClusters();
-        for (List<String> cluster : clusters) {
-            System.out.println("Cluster (" + cluster.size() + ")");
-            for(String url : cluster) {
-                System.out.println(" - " + url);
+                sameDepthClusters.put(index, newSet );
             }
         }
-        
+
+        for (Object obj : sameDepthClusters.keySet() ){
+
+//            for (String item : sameDepthClusters.get(obj)) {
+//                System.out.println(item);
+//                UrlTokenizer tokenizer = new UrlTokenizer(item );
+//                tokenizer.printInfo();
+//            }
+                if (obj != null){
+                Set listURLs = sameDepthClusters.get(obj);
+                UrlClusterer clusterer = new UrlClusterer(listURLs);
+                List<List<String>> clusters = clusterer.getClusters();
+                for (List<String> cluster : clusters) {
+                    if (cluster.size() != 0){
+                    System.out.println("Cluster (" + cluster.size() + ")");
+                    for(String url : cluster) {
+                    System.out.println(" - " + url);    
+                    }
+
+                    }
+                }
+                }
+
+        }
+
+
+//
+//        for (String item : processedURLs) {
+//            System.out.println(item);
+//            UrlTokenizer tokenizer = new UrlTokenizer(item);
+//            tokenizer.printInfo();
+//        }
+//
+//        UrlClusterer clusterer = new UrlClusterer(processedURLs);
+//        List<List<String>> clusters = clusterer.getClusters();
+//        for (List<String> cluster : clusters) {
+//            System.out.println("Cluster (" + cluster.size() + ")");
+//            for(String url : cluster) {
+//                System.out.println(" - " + url);
+//            }
+//        }
+//
         TreeBuilder tree1=null;
 
 //        tree1 = new TreeBuilder("http://www.milliyet.com.tr/2011/01/11/index.html");
