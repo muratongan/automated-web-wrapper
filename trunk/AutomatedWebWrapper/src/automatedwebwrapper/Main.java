@@ -5,8 +5,9 @@
 
 package automatedwebwrapper;
 
-import automatedwebwrapper.WebCrawler.UtilityClasses.MultidepthUrlClusterer;
-import automatedwebwrapper.WebCrawler.UtilityClasses.UrlClusterer;
+import automatedwebwrapper.cluster.ClusterAnalyzer;
+import automatedwebwrapper.cluster.MultidepthUrlClusterer;
+import automatedwebwrapper.cluster.UrlClusterer;
 import automatedwebwrapper.tree.TreeBuilder;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,16 +29,24 @@ public class Main {
         // TODO code application logic here
         
         automatedwebwrapper.WebCrawler.Main exMain = new automatedwebwrapper.WebCrawler.Main();
-        Set<String> processedURLs = exMain.startCrawl("http://cnn.com", 30); //This is the set of all Processed URLS crawled by the crawler
+        Set<String> processedURLs = exMain.startCrawl("http://e-bergi.com", 100); //This is the set of all Processed URLS crawled by the crawler
         System.out.println("number of urls: " + processedURLs.size());
 
         MultidepthUrlClusterer clusterer = new MultidepthUrlClusterer(processedURLs);
         List<List<String>> clusters = clusterer.getClusters();
         for (List<String> cluster : clusters) {
+            System.out.println();
             System.out.println("Cluster (" + cluster.size() + ")");
             for(String url : cluster) {
                 System.out.println(" - " + url);
             }
+
+            ClusterAnalyzer analyzer = new ClusterAnalyzer(cluster);
+            
+            System.out.println();
+            analyzer.analyzeCluster();
+            System.out.println();
+            System.out.println("=================");
         }
 
 //        TreeBuilder tree=null;

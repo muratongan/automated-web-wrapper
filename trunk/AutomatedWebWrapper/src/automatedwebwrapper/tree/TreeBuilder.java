@@ -39,10 +39,9 @@ public class TreeBuilder {
             String charset;
             try {
                 charset = conn.getHeaderField("Content-Type").split("=")[1];
-                System.out.println("Charset : " + charset);
             } catch(Exception ex) {
                 charset = "utf-8";
-                System.out.println("Header : " + conn.getHeaderField("Content-Type"));
+//                System.out.println("Header : " + conn.getHeaderField("Content-Type"));
             }
             Tidy tidy = new Tidy();
             tidy.setInputEncoding(charset);
@@ -54,7 +53,8 @@ public class TreeBuilder {
             tidy.setErrout(writer);
             document = tidy.parseDOM(conn.getInputStream(), null);
         } catch (IOException ex) {
-            Logger.getLogger(TreeBuilder.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error visiting the page");
+//            Logger.getLogger(TreeBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // build info tree

@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 
-package automatedwebwrapper.WebCrawler.UtilityClasses;
+package automatedwebwrapper.cluster;
 
+import automatedwebwrapper.WebCrawler.UtilityClasses.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
