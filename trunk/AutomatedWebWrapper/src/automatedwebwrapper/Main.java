@@ -28,7 +28,7 @@ public class Main {
         // TODO code application logic here
         
         automatedwebwrapper.WebCrawler.Main exMain = new automatedwebwrapper.WebCrawler.Main();
-        Set<String> processedURLs = exMain.startCrawl("http://bbc.co.uk", 10); //This is the set of all Processed URLS crawled by the crawler
+        Set<String> processedURLs = exMain.startCrawl("http://cnn.com", 350); //This is the set of all Processed URLS crawled by the crawler
         System.out.println("number of urls: " + processedURLs.size());
 
         Map<Object,Set<String>> sameDepthClusters = new HashMap<Object, Set<String>>();
@@ -67,7 +67,7 @@ public class Main {
                 List<List<String>> clusters = clusterer.getClusters();
                 for (List<String> cluster : clusters) {
                     if (cluster.size() != 0){
-                    System.out.println("Cluster (" + cluster.size() + ")");
+                    System.out.println("Cluster (" + cluster.size() + ") DEPTH=>" + obj.toString());
                     for(String url : cluster) {
                     System.out.println(" - " + url);    
                     }
@@ -77,7 +77,6 @@ public class Main {
                 }
 
         }
-
 
 //
 //        for (String item : processedURLs) {
@@ -94,9 +93,9 @@ public class Main {
 //                System.out.println(" - " + url);
 //            }
 //        }
-//
-        TreeBuilder tree1=null;
 
+        TreeBuilder tree1=null;
+//        tree1 = new TreeBuilder("http://www.milliyet.com.tr/2011/01/11/index.html");
 //        tree1 = new TreeBuilder("http://www.milliyet.com.tr/2011/01/11/index.html");
 //        tree1 = new TreeBuilder("http://www.milliyet.com.tr/cep-telefonundan-yalan-olcer-e-tepki/ekonomi/sondakika/09.01.2011/1337034/default.htm");
 //        tree1 = new TreeBuilder("http://www.milliyet.com.tr/dizi-setini-aratmayan-protesto/turkiye/sondakika/09.01.2011/1337052/default.htm");
@@ -116,8 +115,7 @@ public class Main {
 
 //        tree1 = new TreeBuilder("http://e-bergi.com/2011/Ocak/");
 //        tree1 = new TreeBuilder("http://e-bergi.com/2011/Ocak/goruntu-donusumleri");
-
-//        tree1.printCurrentNode(tree1.getRoot());
+//        tree1.printCurrentNode(tree1..getRoot());
 
     }
 }
