@@ -45,11 +45,26 @@ public class UrlClusterer {
         Instances data = new Instances("Data", atts, 0);
         
         for (String url : urls) {
+            String[] parts = null;
             Instance instance = new Instance(11);
             UrlTokenizer tokenizer = new UrlTokenizer(url);
             String path = tokenizer.getPath();
-            instance.setValue(data.attribute("url"), path);
-            String[] parts = path.split("/");
+            instance.setValue(data.attribute("url"), url); //Path used for clustring
+            if ( url.indexOf("#") > 0 || url.indexOf("&amp") > 0 || url.indexOf("?") > 0 || url.indexOf("?") > 0 ) {
+            url = url.substring(url.indexOf(path));
+            url = url.replace("#", "/").replace("&amp", "/").replace("?", "/").replace("=", "/");
+            
+            parts = url.split("/");
+
+            }
+            else
+            {
+                parts  = path.split("/");
+            }
+
+
+
+
             for (int i=0; i<10; i++) {
                 if (parts.length > i && parts[i] != null) {
                     instance.setValue(data.attribute("att"+Integer.toString(i)), parts[i]);
@@ -57,6 +72,7 @@ public class UrlClusterer {
                     instance.setValue(data.attribute("att"+Integer.toString(i)), "");
                 }
             }
+            //instance.setValue(data.attribute("att9"), tokenizer.getArguments());
             data.add(instance);
         }
         
