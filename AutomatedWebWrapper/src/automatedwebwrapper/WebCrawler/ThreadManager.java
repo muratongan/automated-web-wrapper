@@ -24,7 +24,7 @@ public class ThreadManager {
 
 	private Class threadClass;
 
-	private int idCounter; // A unique synchronized counter
+	private int idCounter = 1; // A unique synchronized counter
 	 
 	private int numberOfThreads; //Current Number of threads
 
@@ -81,7 +81,7 @@ public class ThreadManager {
        	this.threadClass = threadClass;
         this.baseURL = baseURL;
 
-        this.idCounter = 0;
+        this.idCounter = 1;
 	this.numberOfThreads = 0;
 	createThreads();
        }
