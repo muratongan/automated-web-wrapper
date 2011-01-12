@@ -61,6 +61,10 @@ public class NodeInfo {
         return linkCount;
     }
 
+    public List<NodeInfo> getChildren() {
+        return children;
+    }
+
     public void setTextWeight(int textWeight) {
         // exclude certain elements
         if (this.node.getNodeType() == Node.ELEMENT_NODE) {
@@ -185,7 +189,7 @@ public class NodeInfo {
     }
 
     public boolean isNavigationNode() {
-        if (this.linkCount > 3 && this.linkWeight > 0 && this.linkWeight*2 > this.textWeight) {
+        if (this.linkCount > 3 && this.linkWeight > 0 && (100*this.linkWeight/(this.linkWeight+this.textWeight) > 70) ) {
             return true;
         } else {
             return false;
