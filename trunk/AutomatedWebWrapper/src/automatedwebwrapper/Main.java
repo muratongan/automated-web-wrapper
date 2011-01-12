@@ -6,7 +6,6 @@
 package automatedwebwrapper;
 
 import automatedwebwrapper.WebCrawler.UtilityClasses.UrlClusterer;
-import automatedwebwrapper.WebCrawler.UtilityClasses.UrlTokenizer;
 import automatedwebwrapper.tree.TreeBuilder;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -99,14 +98,23 @@ public class Main {
 //        tree1 = new TreeBuilder("http://www.milliyet.com.tr/2011/01/11/index.html");
 //        tree1 = new TreeBuilder("http://www.milliyet.com.tr/cep-telefonundan-yalan-olcer-e-tepki/ekonomi/sondakika/09.01.2011/1337034/default.htm");
 //        tree1 = new TreeBuilder("http://www.milliyet.com.tr/dizi-setini-aratmayan-protesto/turkiye/sondakika/09.01.2011/1337052/default.htm");
+//        tree1 = new TreeBuilder("http://www.milliyet.com.tr/2011/01/11/index.html");
+//        tree1 = new TreeBuilder("http://www.milliyet.com.tr/cep-telefonundan-yalan-olcer-e-tepki/ekonomi/sondakika/09.01.2011/1337034/default.htm");
+//            tree1 = new TreeBuilder("http://www.ntvmsnbc.com");
 
-//        tree1 = new TreeBuilder("http://www.ntvmsnbc.com/");
-//        tree1 = new TreeBuilder("http://www.cnn.com/");
-//        tree1 = new TreeBuilder("http://sportsillustrated.cnn.com/2011/football/ncaa/01/10/auburn-oregon-bcs-championship/index.html?hpt=C2");
-//        tree1 = new TreeBuilder("http://www.bbc.co.uk/");
-//        tree1 = new TreeBuilder("http://www.bbc.co.uk/news/world-asia-pacific-12158608");
-//        tree1 = new TreeBuilder("");
 
+//            String url = "http://www.cnn.com/";
+            String url = "http://sportsillustrated.cnn.com/2011/football/ncaa/01/10/auburn-oregon-bcs-championship/index.html?hpt=C2";
+//            String url = "http://www.bbc.co.uk/";
+//            String url = "http://www.bbc.co.uk/news/world-asia-pacific-12158608";
+//            String url = "http://ongan.net/";
+//            String url = "http://ongan.net/blog/";
+//            String url = "http://ongan.net/blog/2010/09/who-removed-you-on-facebook/";
+//            String url = "http://e-bergi.com/2011/Ocak/";
+//            String url = "http://e-bergi.com/2011/Ocak/goruntu-donusumleri";
+//            String url = "http://www.milliyet.com.tr/dizi-setini-aratmayan-protesto/turkiye/sondakika/09.01.2011/1337052/default.htm";
+            
+            tree1 = new TreeBuilder(url);
 
 //        tree1 = new TreeBuilder("http://ongan.net/");
 //        tree1 = new TreeBuilder("http://ongan.net/projects");
