@@ -49,11 +49,11 @@ public class Crawler implements InterfaceThreadMsgReceiver {
     
     
     public void msgReceived(Object theMessage, int threadId) {
-        System.out.println("Thread [" + threadId + "] " + "Started Processing " + theMessage.toString());
+        System.out.println("Thread with threadId ->" + threadId + "<- " + "started processing URL -> " + theMessage.toString());
     }
 
     public void threadFinishedProcessing(int threadId) {
-        System.out.println("Thread with threadId: [" + threadId + "] finished processesing");
+        System.out.println("Thread with threadId ->" + threadId + "<- finished processesing assigned URLs");
     }
 
     public void allThreadsFinishedProcessing() {
