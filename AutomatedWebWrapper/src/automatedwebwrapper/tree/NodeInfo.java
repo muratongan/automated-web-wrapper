@@ -189,7 +189,10 @@ public class NodeInfo {
     }
 
     public boolean isNavigationNode() {
-        if (this.linkCount > 3 && this.linkWeight > 0 && (100*this.linkWeight/(this.linkWeight+this.textWeight) > 70) ) {
+        if (this.linkWeight > 0 && this.textWeight == 0 ) {
+            return true;
+        }
+        if (this.linkCount > 3 && this.linkWeight > 0 && (((100*this.linkWeight)/this.textWeight) > 50) ) {
             return true;
         } else {
             return false;
