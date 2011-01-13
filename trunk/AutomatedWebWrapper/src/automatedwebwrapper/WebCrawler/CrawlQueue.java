@@ -7,6 +7,12 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import automatedwebwrapper.WebCrawler.Interfaces.InterfaceCrawlQueue;
+import automatedwebwrapper.WebCrawler.UtilityClasses.URLExtractor;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * M. H. Nassabi
@@ -92,9 +98,16 @@ public class CrawlQueue implements InterfaceCrawlQueue {
 
 	public synchronized Object pop(int level) {
 		String urlString;
-		// try to get element from the appropriate queue
+                String [] returnArray = new String[3];
+                String rawPage = null;
+                AtomicReference<Object> hostName = new AtomicReference<Object>("NULL");
+
+                // try to get element from the appropriate queue
 		// is the queue is empty, return null
-		if (level % 2 == 0) {
+		URL url = null;
+
+                do{
+                   if (level % 2 == 0) {
 			if (evenQueue.size() == 0) {
 				return null;
 			} else {
@@ -107,14 +120,30 @@ public class CrawlQueue implements InterfaceCrawlQueue {
 				urlString = (String) oddQueue.removeFirst();
 			}
 		}
-		try {
-			URL url = new URL(urlString);
-			processedURLs.add(urlString);
-			return url;
-		} catch (MalformedURLException e) {
-                        System.out.println("Error in STRING FORMAT, NOT URL");
-                    	return null;
-		}
+
+                   try {
+
+                       url = new URL(urlString);
+                       rawPage = URLExtractor.getURL(url, hostName);
+
+                   } catch (MalformedURLException ex) {
+
+                       Logger.getLogger(CrawlQueue.class.getName()).log(Level.SEVERE, null, ex);
+
+                   }
+                   catch(Exception exp){
+                       Logger.getLogger(CrawlQueue.class.getName()).log(Level.SEVERE, null, exp);
+                   }
+
+
+                }while ( rawPage.equals("") );
+                processedURLs.add(urlString);
+
+
+		returnArray[0] = hostName.get().toString();
+                returnArray[1] = rawPage;
+                returnArray[2] = url.toString();
+                return returnArray;
 	}
 
 	public synchronized boolean push(Object url, int level) {
