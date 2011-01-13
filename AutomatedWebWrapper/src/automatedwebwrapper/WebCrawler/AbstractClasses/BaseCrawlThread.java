@@ -74,10 +74,12 @@ abstract public class BaseCrawlThread extends Thread {
     public void run()
     {
         Object newCrawlObj = queue.pop(level);
+        String[] URLtext = (String [])newCrawlObj;
+        String text = URLtext[2];
 
         while (newCrawlObj != null)
         {
-            threadMsgReceiver.msgReceived(newCrawlObj, this.getThreadId());
+            threadMsgReceiver.msgReceived( text , this.getThreadId());
 
             process(newCrawlObj);  //New crawled object is processed
 
