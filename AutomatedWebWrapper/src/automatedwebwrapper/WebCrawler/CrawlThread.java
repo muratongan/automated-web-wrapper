@@ -7,9 +7,10 @@ package automatedwebwrapper.WebCrawler;
 
 import automatedwebwrapper.WebCrawler.AbstractClasses.BaseCrawlThread;
 import automatedwebwrapper.WebCrawler.UtilityClasses.URLExtractor;
-import java.io.Console;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -21,22 +22,22 @@ public class CrawlThread extends BaseCrawlThread {
    @Override
     public void process(Object o) {
 		try {
-			URL pageURL = (URL) o;
+			String[] returnedArray = (String[])o;
+                        
+
+                        String hostName = returnedArray[0];
 
                         URL baseURL = threadManager.getBaseURL();
 
-                        AtomicReference<Object> hostName = new AtomicReference<Object>("NULL");
-                        String rawPage = URLExtractor.getURL(pageURL, hostName);
+                        String rawPage = returnedArray[1];
+                        
+
+
                         String smallPage = rawPage.toLowerCase().replaceAll("\\s", " ");
 
                         Vector links = URLExtractor.extractLinks(rawPage, smallPage);
 
-
-
- 
-
-                        
-                        pageURL = (URL) hostName.get();
+                        URL pageURL = new URL(hostName);
 
                         for (int n = 0; n < links.size(); n++) {
 				try {
