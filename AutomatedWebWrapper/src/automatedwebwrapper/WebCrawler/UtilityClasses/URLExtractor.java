@@ -22,30 +22,75 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class URLExtractor {
 
+       public static boolean checkContentType(URL url){
+            try{
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-        public static void getHttpPage(URL url, Writer writer, AtomicReference<Object> hostName)
-                {
+                urlConnection.setFollowRedirects(true);
+                urlConnection.setConnectTimeout( 10000 );
+                urlConnection.setReadTimeout( 10000 );
+                urlConnection.setInstanceFollowRedirects( true );
+                urlConnection.setRequestProperty( "User-agent", "spider" );
+                urlConnection.connect();
+
+                urlConnection.getHeaderFields();
+                String content = urlConnection.getContentType();
+
+                if (content.contains("html") || content == null)
+                    return true;
+                else
+                    return false;
+                }
+
+        catch (Exception ex){
+            System.err.println("An error Occured in URL Extractor => " + ex.toString());
+            return false;
+        }
+       }
+        
+       public static void  getHttpPage(URL url, Writer writer, AtomicReference<Object> hostName)
+                { 
 
             try{
                  HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
+                urlConnection.setFollowRedirects(true);
+                urlConnection.setConnectTimeout( 10000 );
+                urlConnection.setReadTimeout( 10000 );
+                urlConnection.setInstanceFollowRedirects( true );
+                urlConnection.setRequestProperty( "User-agent", "spider" );
+                urlConnection.connect();
 
-            urlConnection.setFollowRedirects(true);
-            urlConnection.setConnectTimeout( 10000 );
-            urlConnection.setReadTimeout( 10000 );
-            urlConnection.setInstanceFollowRedirects( true );
-            urlConnection.setRequestProperty( "User-agent", "spider" );
-            urlConnection.connect();
+                urlConnection.getHeaderFields();
+                String content = urlConnection.getContentType();
 
-            urlConnection.getHeaderFields();
-            URL respondedHostName = urlConnection.getURL();
-            hostName.set(respondedHostName);
 
-           BufferedReader in = new BufferedReader( new InputStreamReader( urlConnection.getInputStream()));
-           String inputLine;
-           while ((inputLine = in.readLine()) != null)
-                writer.write(inputLine);
-           in.close();
+
+                if (content.contains("html") || content == null){
+
+
+                URL respondedHostName = urlConnection.getURL();
+                hostName.set(respondedHostName);
+
+               BufferedReader in = new BufferedReader( new InputStreamReader( urlConnection.getInputStream()));
+                String inputLine;
+                while ((inputLine = in.readLine()) != null)
+                    writer.write(inputLine);
+                    in.close();
+
+                }
+                else{
+                    hostName.set(null);
+                    
+                }
+                    
+        
+           
+           
+
+
+
+           
             }
            catch (Exception ex){
                System.err.println("An error Occured => " + ex.toString());
@@ -59,6 +104,7 @@ public class URLExtractor {
 		throws IOException {
 		StringWriter sw = new StringWriter();
 		getHttpPage(url, sw, hostName);
+                    
             	return sw.toString();
 	}
 
@@ -80,6 +126,7 @@ public class URLExtractor {
                             index++;
                             continue;
                         }
+
                             
                         if (! links.contains(strLink)) links.add(strLink);
 		}
